@@ -1,0 +1,22 @@
+{
+  "type": "port",
+  "name": "rama-tls-rustls-kotlin",
+  "source": {
+    "path": "tmp/rama-tls-rustls/src",
+    "lang": "rust"
+  },
+  "target": {
+    "path": "src/commonMain/kotlin/io/github/kotlinmania/ramatlsrustls",
+    "lang": "kotlin"
+  },
+  "checks": {
+    "deep": true,
+    "missing": true,
+    "todos": true,
+    "lint": true
+  },
+  "reexport_modules": [
+    "mod.rs",
+    "lib.rs"
+  ]
+}
