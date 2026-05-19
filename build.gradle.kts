@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.gradle.kotlin.dsl.support.serviceOf
+import org.gradle.process.ExecOperations
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec
@@ -17,17 +19,7 @@ plugins {
 group = "io.github.kotlinmania"
 version = "0.1.0"
 
-val androidSdkDir: String? =
-    providers.environmentVariable("ANDROID_SDK_ROOT").orNull
-        ?: providers.environmentVariable("ANDROID_HOME").orNull
-
-if (androidSdkDir != null && file(androidSdkDir).exists()) {
-    val localProperties = rootProject.file("local.properties")
-    if (!localProperties.exists()) {
-        val sdkDirPropertyValue = file(androidSdkDir).absolutePath.replace("\\", "/")
-        localProperties.writeText("sdk.dir=$sdkDirPropertyValue")
-    }
-}
+serviceOf<ExecOperations>().exec { commandLine("bash", "./setup-android-sdk.sh") }
 
 kotlin {
     applyDefaultHierarchyTemplate()
@@ -50,8 +42,6 @@ kotlin {
             xcf.add(this)
         }
     }
-    linuxX64()
-    mingwX64()
     iosArm64 {
         binaries.framework {
             baseName = "RamaTlsRustls"
@@ -64,6 +54,60 @@ kotlin {
             xcf.add(this)
         }
     }
+    iosX64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+
+    tvosArm64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+    tvosSimulatorArm64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+
+    watchosArm32 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+    watchosArm64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+    watchosDeviceArm64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+    watchosSimulatorArm64 {
+        binaries.framework {
+            baseName = "RamaTlsRustls"
+            xcf.add(this)
+        }
+    }
+
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+
+    androidNativeArm32()
+    androidNativeArm64()
+    androidNativeX86()
+    androidNativeX64()
+
     js {
         browser()
         nodejs()
@@ -71,6 +115,10 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
+        nodejs()
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmWasi {
         nodejs()
     }
 
@@ -89,6 +137,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -106,11 +156,11 @@ kotlin {
 }
 
 rootProject.extensions.configure<NodeJsEnvSpec>("kotlinNodeJsSpec") {
-    version.set("22.22.2")
+    version.set("24.15.0")
 }
 
 rootProject.extensions.configure<WasmNodeJsEnvSpec>("kotlinWasmNodeJsSpec") {
-    version.set("22.22.2")
+    version.set("24.15.0")
 }
 
 rootProject.extensions.configure<YarnRootEnvSpec>("kotlinYarnSpec") {
@@ -297,8 +347,11 @@ tasks.register("test") {
 
     val defaultTestTasks = listOf(
         "macosArm64Test",
+        "jvmTest",
         "jsNodeTest",
         "wasmJsNodeTest",
+        "compileAndroidMain",
+        "assembleUnitTest",
     )
 
     dependsOn(defaultTestTasks.mapNotNull { taskName -> tasks.findByName(taskName) })
