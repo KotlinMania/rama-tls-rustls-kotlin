@@ -22,25 +22,19 @@ class NoServerCertVerifier {
         _serverName: ServerName,
         _ocspResponse: ByteArray,
         _now: UnixTime,
-    ): ServerCertVerified {
-        return ServerCertVerified.Assertion
-    }
+    ): ServerCertVerified = ServerCertVerified.Assertion
 
     fun verifyTls12Signature(
         _message: ByteArray,
         _cert: CertificateDer,
         _dss: DigitallySignedStruct,
-    ): HandshakeSignatureValid {
-        return HandshakeSignatureValid.Assertion
-    }
+    ): HandshakeSignatureValid = HandshakeSignatureValid.Assertion
 
     fun verifyTls13Signature(
         _message: ByteArray,
         _cert: CertificateDer,
         _dss: DigitallySignedStruct,
-    ): HandshakeSignatureValid {
-        return HandshakeSignatureValid.Assertion
-    }
+    ): HandshakeSignatureValid = HandshakeSignatureValid.Assertion
 
     /** Returns every signature scheme accepted by this verifier. */
     fun supportedVerifySchemes(): List<SignatureScheme> =
@@ -61,11 +55,17 @@ class NoServerCertVerifier {
         )
 }
 
-class CertificateDer(val bytes: ByteArray)
+class CertificateDer(
+    val bytes: ByteArray,
+)
 
-class ServerName(val value: String)
+class ServerName(
+    val value: String,
+)
 
-class UnixTime(val epochSeconds: Long)
+class UnixTime(
+    val epochSeconds: Long,
+)
 
 class DigitallySignedStruct(
     val scheme: SignatureScheme,
