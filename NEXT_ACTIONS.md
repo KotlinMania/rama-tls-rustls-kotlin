@@ -5,9 +5,9 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 14/14 (100.0%)
-- **Function parity:** 75/79 matched (target 151) — 94.9%
+- **Function parity:** 76/79 matched (target 156) — 96.2%
 - **Class/type parity:** 18/25 matched (target 64) — 72.0%
-- **Combined symbol parity:** 93/104 matched (target 215) — 89.4%
+- **Combined symbol parity:** 94/104 matched (target 220) — 90.4%
 - **Average inline-code cosine:** 0.55 (function body across 12 matched files)
 - **Average documentation cosine:** 0.43 (doc text across 12 matched files)
 - **Cheat-zeroed Files:** 2
@@ -62,19 +62,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/3 matched (target 1)
 - **Missing types:** `Output`, `Error`
 
-### 4. type_conversion
-
-- **Target:** `ramatlsrustls.TypeConversion`
-- **Similarity:** 0.13
-- **Dependents:** 0
-- **Priority Score:** 20408.7
-- **Functions:** 2/3 matched (target 32)
-- **Missing functions:** `rama_try_from`
-- **Types:** 0/1 matched (target 18)
-- **Missing types:** `Error`
-- **Tests:** 1/1 matched
-
-### 5. server.acceptor_data
+### 4. server.acceptor_data
 
 - **Target:** `server.AcceptorData`
 - **Similarity:** 0.34
@@ -85,7 +73,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 5/5 matched (target 9)
 - **Missing types:** _none_
 
-### 6. server.layer
+### 5. server.layer
 
 - **Target:** `server.Layer`
 - **Similarity:** 0.77
@@ -95,6 +83,18 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 1/2 matched (target 1)
 - **Missing types:** `Service`
+
+### 6. type_conversion
+
+- **Target:** `ramatlsrustls.TypeConversion`
+- **Similarity:** 0.24
+- **Dependents:** 0
+- **Priority Score:** 10407.6
+- **Functions:** 3/3 matched (target 35)
+- **Missing functions:** _none_
+- **Types:** 0/1 matched (target 18)
+- **Missing types:** `Error`
+- **Tests:** 1/1 matched
 
 ### 7. client.connector_data
 
@@ -169,7 +169,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 10.0
-- **Functions:** 0/0 matched (target 3)
+- **Functions:** 0/0 matched (target 5)
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 2)
 - **Missing types:** _none_

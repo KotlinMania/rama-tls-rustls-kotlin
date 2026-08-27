@@ -4,17 +4,24 @@ package io.github.kotlinmania.ramatlsrustls
 /**
  * Protocol version for TLS connections.
  */
-sealed class ProtocolVersion(val code: UShort) {
+sealed class ProtocolVersion(
+    val code: UShort,
+) {
     data object TLS12 : ProtocolVersion(0x0303u)
+
     data object TLS13 : ProtocolVersion(0x0304u)
-    class Unknown(code: UShort) : ProtocolVersion(code)
+
+    class Unknown(
+        code: UShort,
+    ) : ProtocolVersion(code)
 
     companion object {
-        fun fromCode(code: UShort): ProtocolVersion = when (code) {
-            0x0303u.toUShort() -> TLS12
-            0x0304u.toUShort() -> TLS13
-            else -> Unknown(code)
-        }
+        fun fromCode(code: UShort): ProtocolVersion =
+            when (code) {
+                0x0303u.toUShort() -> TLS12
+                0x0304u.toUShort() -> TLS13
+                else -> Unknown(code)
+            }
 
         fun ramaFrom(code: UShort): ProtocolVersion = fromCode(code)
     }
@@ -29,17 +36,20 @@ sealed class ProtocolVersion(val code: UShort) {
 
     override fun hashCode(): Int = code.hashCode()
 
-    override fun toString(): String = when (this) {
-        TLS12 -> "TLS12"
-        TLS13 -> "TLS13"
-        is Unknown -> "Unknown($code)"
-    }
+    override fun toString(): String =
+        when (this) {
+            TLS12 -> "TLS12"
+            TLS13 -> "TLS13"
+            is Unknown -> "Unknown($code)"
+        }
 }
 
 /**
  * Cipher suite identifier.
  */
-data class CipherSuite(val code: UShort) {
+data class CipherSuite(
+    val code: UShort,
+) {
     companion object {
         val TLS_AES_128_GCM_SHA256 = CipherSuite(0x1301u)
         val TLS_AES_256_GCM_SHA384 = CipherSuite(0x1302u)
@@ -58,7 +68,9 @@ data class CipherSuite(val code: UShort) {
 /**
  * Application protocol negotiated via ALPN.
  */
-data class ApplicationProtocol(val bytes: ByteArray) {
+data class ApplicationProtocol(
+    val bytes: ByteArray,
+) {
     val name: String get() = bytes.decodeToString()
 
     fun isSecure(): Boolean = true
@@ -89,11 +101,17 @@ data class ApplicationProtocol(val bytes: ByteArray) {
  * Host name or IP address.
  */
 sealed class Host {
-    data class Name(val domain: String) : Host()
-    data class Address(val ip: String) : Host()
+    data class Name(
+        val domain: String,
+    ) : Host()
+
+    data class Address(
+        val ip: String,
+    ) : Host()
 
     companion object {
         fun fromDomain(domain: String): Host = Name(domain)
+
         fun fromIp(ip: String): Host = Address(ip)
     }
 }
@@ -102,19 +120,25 @@ sealed class Host {
  * Data encoding for certificates and DER payloads.
  */
 sealed class DataEncoding {
-    data class Der(val bytes: ByteArray) : DataEncoding() {
+    data class Der(
+        val bytes: ByteArray,
+    ) : DataEncoding() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other !is Der) return false
             return bytes.contentEquals(other.bytes)
         }
+
         override fun hashCode(): Int = bytes.contentHashCode()
     }
 
-    data class DerStack(val items: List<ByteArray>) : DataEncoding()
+    data class DerStack(
+        val items: List<ByteArray>,
+    ) : DataEncoding()
 
     companion object {
         fun fromCertificate(cert: CertificateDer): DataEncoding = Der(cert.bytes)
+
         fun fromCertificates(certs: List<CertificateDer>): DataEncoding =
             DerStack(certs.map { it.bytes })
     }
@@ -124,9 +148,17 @@ sealed class DataEncoding {
  * TLS Client Hello extensions.
  */
 sealed class ClientHelloExtension {
-    data class SignatureAlgorithms(val schemes: List<SignatureScheme>) : ClientHelloExtension()
-    data class ServerName(val name: String?) : ClientHelloExtension()
-    data class ApplicationLayerProtocolNegotiation(val protocols: List<ApplicationProtocol>) : ClientHelloExtension()
+    data class SignatureAlgorithms(
+        val schemes: List<SignatureScheme>,
+    ) : ClientHelloExtension()
+
+    data class ServerName(
+        val name: String?,
+    ) : ClientHelloExtension()
+
+    data class ApplicationLayerProtocolNegotiation(
+        val protocols: List<ApplicationProtocol>,
+    ) : ClientHelloExtension()
 }
 
 /**
@@ -139,16 +171,21 @@ data class ClientHello(
     val extensions: List<ClientHelloExtension> = emptyList(),
 ) {
     fun signatureSchemes(): List<SignatureScheme> =
-        extensions.filterIsInstance<ClientHelloExtension.SignatureAlgorithms>()
+        extensions
+            .filterIsInstance<ClientHelloExtension.SignatureAlgorithms>()
             .flatMap { it.schemes }
 
     fun serverName(): String? =
-        extensions.filterIsInstance<ClientHelloExtension.ServerName>()
-            .firstOrNull()?.name
+        extensions
+            .filterIsInstance<ClientHelloExtension.ServerName>()
+            .firstOrNull()
+            ?.name
 
     fun alpn(): List<ApplicationProtocol>? =
-        extensions.filterIsInstance<ClientHelloExtension.ApplicationLayerProtocolNegotiation>()
-            .firstOrNull()?.protocols
+        extensions
+            .filterIsInstance<ClientHelloExtension.ApplicationLayerProtocolNegotiation>()
+            .firstOrNull()
+            ?.protocols
 }
 
 /**
@@ -159,10 +196,11 @@ fun ServerName.toHost(): Host = Host.Name(value)
 /**
  * Converts a [Host] into a [ServerName].
  */
-fun Host.toServerName(): ServerName = when (this) {
-    is Host.Name -> ServerName(domain)
-    is Host.Address -> ServerName(ip)
-}
+fun Host.toServerName(): ServerName =
+    when (this) {
+        is Host.Name -> ServerName(domain)
+        is Host.Address -> ServerName(ip)
+    }
 
 /**
  * Converts a [CertificateDer] to [DataEncoding].
@@ -174,3 +212,22 @@ fun CertificateDer.toDataEncoding(): DataEncoding = DataEncoding.Der(bytes)
  */
 fun List<CertificateDer>.toDataEncoding(): DataEncoding =
     DataEncoding.DerStack(map { it.bytes })
+
+/**
+ * Rama TryFrom conversion helper for [ProtocolVersion].
+ */
+fun ProtocolVersion.ramaTryFrom(): ProtocolVersion? =
+    when (this) {
+        ProtocolVersion.TLS12, ProtocolVersion.TLS13 -> this
+        is ProtocolVersion.Unknown -> null
+    }
+
+/**
+ * Rama TryFrom conversion helper from [Host] to [ServerName].
+ */
+fun Host.ramaTryFrom(): ServerName = toServerName()
+
+/**
+ * Rama TryFrom conversion helper from [ServerName] to [Host].
+ */
+fun ServerName.ramaTryFrom(): Host = toHost()

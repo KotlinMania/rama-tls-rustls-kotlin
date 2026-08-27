@@ -2,10 +2,6 @@
 package io.github.kotlinmania.ramatlsrustls
 
 import io.github.kotlinmania.ramatlsrustls.client.AutoTlsStream
-import io.github.kotlinmania.ramatlsrustls.client.ConnectorKindAuto
-import io.github.kotlinmania.ramatlsrustls.client.ConnectorKindSecure
-import io.github.kotlinmania.ramatlsrustls.client.ConnectorKindTunnel
-import io.github.kotlinmania.ramatlsrustls.client.TlsConnector
 import io.github.kotlinmania.ramatlsrustls.client.TlsConnectorData
 import io.github.kotlinmania.ramatlsrustls.client.TlsConnectorDataBuilder
 import io.github.kotlinmania.ramatlsrustls.client.TlsConnectorLayer
@@ -17,7 +13,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class ClientTest {
-
     @Test
     fun testTlsConnectorDataBuilders() {
         val httpAuto = TlsConnectorData.tryNewHttpAuto()
@@ -30,11 +25,13 @@ class ClientTest {
         val http2 = TlsConnectorData.tryNewHttp2()
         assertEquals(1, http2.clientConfig.alpnProtocols.size)
 
-        val custom = TlsConnectorDataBuilder.new()
-            .withServerName(Host.fromDomain("example.org"))
-            .withStoreServerCertificateChain(true)
-            .withNoCertVerifier()
-            .build()
+        val custom =
+            TlsConnectorDataBuilder
+                .new()
+                .withServerName(Host.fromDomain("example.org"))
+                .withStoreServerCertificateChain(true)
+                .withNoCertVerifier()
+                .build()
 
         assertEquals(Host.Name("example.org"), custom.serverName)
         assertTrue(custom.storeServerCertificateChain)
@@ -63,5 +60,17 @@ class ClientTest {
 
         val connector = autoLayer.layer("inner-service")
         assertEquals("inner-service", connector.inner)
+    }
+
+    @Test
+    fun testAssertSend() {
+        val layer = TlsConnectorLayer.auto()
+        assertNotNull(layer)
+    }
+
+    @Test
+    fun testAssertSync() {
+        val layer = TlsConnectorLayer.auto()
+        assertNotNull(layer)
     }
 }

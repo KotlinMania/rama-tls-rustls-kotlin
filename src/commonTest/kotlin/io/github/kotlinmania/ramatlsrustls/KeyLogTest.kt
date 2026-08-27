@@ -3,10 +3,8 @@ package io.github.kotlinmania.ramatlsrustls
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class KeyLogTest {
-
     @Test
     fun testKeyLogFile() {
         val handle = KeyLogFileHandle("/tmp/ssl_keys.log")

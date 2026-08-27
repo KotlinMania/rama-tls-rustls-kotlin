@@ -6,7 +6,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class TypeConversionTest {
-
     @Test
     fun testRustlsToCommonToRustls() {
         val p = ProtocolVersion.TLS13
@@ -55,15 +54,17 @@ class TypeConversionTest {
     fun testClientHelloExtensions() {
         val schemes = listOf(SignatureScheme.ED25519, SignatureScheme.RSA_PSS_SHA256)
         val protos = listOf(ApplicationProtocol.HTTP_2, ApplicationProtocol.HTTP_11)
-        val hello = ClientHello(
-            protocolVersion = ProtocolVersion.TLS13,
-            cipherSuites = listOf(CipherSuite.TLS_AES_128_GCM_SHA256),
-            extensions = listOf(
-                ClientHelloExtension.SignatureAlgorithms(schemes),
-                ClientHelloExtension.ServerName("api.example.com"),
-                ClientHelloExtension.ApplicationLayerProtocolNegotiation(protos),
-            ),
-        )
+        val hello =
+            ClientHello(
+                protocolVersion = ProtocolVersion.TLS13,
+                cipherSuites = listOf(CipherSuite.TLS_AES_128_GCM_SHA256),
+                extensions =
+                    listOf(
+                        ClientHelloExtension.SignatureAlgorithms(schemes),
+                        ClientHelloExtension.ServerName("api.example.com"),
+                        ClientHelloExtension.ApplicationLayerProtocolNegotiation(protos),
+                    ),
+            )
 
         assertEquals(schemes, hello.signatureSchemes())
         assertEquals("api.example.com", hello.serverName())

@@ -68,6 +68,7 @@ data class TlsConnector<S, K>(
     fun setTargetHttpVersion(version: String) {}
 
     fun assertSend() {}
+
     fun assertSync() {}
 
     companion object {

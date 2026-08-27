@@ -56,7 +56,8 @@ data class TlsConnectorData(
          * Create a default [TlsConnectorData] supporting auto HTTP connections.
          */
         fun tryNewHttpAuto(): TlsConnectorData =
-            TlsConnectorDataBuilder.new()
+            TlsConnectorDataBuilder
+                .new()
                 .withAlpnProtocolsHttpAuto()
                 .build()
 
@@ -64,7 +65,8 @@ data class TlsConnectorData(
          * Create a default [TlsConnectorData] supporting HTTP/1.1 connections.
          */
         fun tryNewHttp1(): TlsConnectorData =
-            TlsConnectorDataBuilder.new()
+            TlsConnectorDataBuilder
+                .new()
                 .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_11))
                 .build()
 
@@ -72,7 +74,8 @@ data class TlsConnectorData(
          * Create a default [TlsConnectorData] supporting HTTP/2 connections.
          */
         fun tryNewHttp2(): TlsConnectorData =
-            TlsConnectorDataBuilder.new()
+            TlsConnectorDataBuilder
+                .new()
                 .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_2))
                 .build()
     }
@@ -94,9 +97,10 @@ class TlsConnectorDataBuilder(
 
         fun new(): TlsConnectorDataBuilder =
             TlsConnectorDataBuilder(
-                clientConfig = ClientConfig(
-                    rootCertificates = clientRootCerts(),
-                ),
+                clientConfig =
+                    ClientConfig(
+                        rootCertificates = clientRootCerts(),
+                    ),
             )
 
         fun newWithClientAuth(

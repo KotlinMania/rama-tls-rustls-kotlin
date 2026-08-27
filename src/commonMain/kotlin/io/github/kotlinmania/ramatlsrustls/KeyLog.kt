@@ -8,7 +8,9 @@ class PlainHex(
     val slice: ByteArray,
 ) {
     fun fmt(): String = slice.toLowerHex()
+
     fun fmtInnerHex(): String = slice.toLowerHex()
+
     override fun toString(): String = fmt()
 }
 
@@ -54,7 +56,6 @@ fun tryNewKeyLogFileHandle(path: String): KeyLogFileHandle = KeyLogFileHandle(pa
 class KeyLogFile(
     val handle: KeyLogFileHandle,
 ) : KeyLog {
-
     companion object {
         /**
          * Makes a new [KeyLogFile] from the given file path.
