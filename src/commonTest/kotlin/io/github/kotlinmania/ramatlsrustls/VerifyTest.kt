@@ -1,4 +1,4 @@
-// port-lint: source verify.rs
+// port-lint: tests rama-tls-rustls/src/verify.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import kotlin.test.Test
