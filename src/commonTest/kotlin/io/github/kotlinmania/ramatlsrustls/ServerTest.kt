@@ -1,29 +1,26 @@
 // port-lint: tests server/mod.rs
 package io.github.kotlinmania.ramatlsrustls
 
-import io.github.kotlinmania.ramatlsrustls.server.DynamicConfigProvider
 import io.github.kotlinmania.ramatlsrustls.server.SelfSignedData
 import io.github.kotlinmania.ramatlsrustls.server.ServerConfig
 import io.github.kotlinmania.ramatlsrustls.server.ServerConfigData
 import io.github.kotlinmania.ramatlsrustls.server.TlsAcceptorData
 import io.github.kotlinmania.ramatlsrustls.server.TlsAcceptorDataBuilder
 import io.github.kotlinmania.ramatlsrustls.server.TlsAcceptorLayer
-import io.github.kotlinmania.ramatlsrustls.server.TlsAcceptorService
 import io.github.kotlinmania.ramatlsrustls.server.TlsStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class ServerTest {
-
     @Test
     fun testTlsAcceptorDataBuilder() {
         val cert = CertificateDer(byteArrayOf(1, 2, 3))
         val key = byteArrayOf(4, 5, 6)
-        val builder = TlsAcceptorDataBuilder.new(listOf(cert), key)
-            .withAlpnProtocolsHttpAuto()
+        val builder =
+            TlsAcceptorDataBuilder
+                .new(listOf(cert), key)
+                .withAlpnProtocolsHttpAuto()
 
         val data = builder.build()
         val config = data.serverConfig
@@ -34,9 +31,11 @@ class ServerTest {
 
     @Test
     fun testSelfSignedBuilder() {
-        val selfSigned = TlsAcceptorDataBuilder.tryNewSelfSigned(SelfSignedData(listOf("localhost")))
-            .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_11))
-            .build()
+        val selfSigned =
+            TlsAcceptorDataBuilder
+                .tryNewSelfSigned(SelfSignedData(listOf("localhost")))
+                .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_11))
+                .build()
 
         assertTrue(selfSigned.serverConfig is ServerConfig.Stored)
     }

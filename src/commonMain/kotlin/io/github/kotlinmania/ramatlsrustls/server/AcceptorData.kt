@@ -41,13 +41,19 @@ interface DynDynamicConfigProvider {
  * Server configuration: either stored or dynamically provided.
  */
 sealed class ServerConfig {
-    data class Stored(val config: ServerConfigData) : ServerConfig()
-    data class Dynamic(val provider: DynamicConfigProvider) : ServerConfig()
+    data class Stored(
+        val config: ServerConfigData,
+    ) : ServerConfig()
 
-    fun fmt(): String = when (this) {
-        is Stored -> "ServerConfig.Stored($config)"
-        is Dynamic -> "ServerConfig.Dynamic($provider)"
-    }
+    data class Dynamic(
+        val provider: DynamicConfigProvider,
+    ) : ServerConfig()
+
+    fun fmt(): String =
+        when (this) {
+            is Stored -> "ServerConfig.Stored($config)"
+            is Dynamic -> "ServerConfig.Dynamic($provider)"
+        }
 
     override fun toString(): String = fmt()
 }
@@ -82,10 +88,11 @@ class TlsAcceptorDataBuilder(
             certChain: List<CertificateDer>,
             privateKey: ByteArray,
         ): TlsAcceptorDataBuilder {
-            val config = ServerConfigData(
-                certificates = certChain,
-                privateKey = privateKey,
-            )
+            val config =
+                ServerConfigData(
+                    certificates = certChain,
+                    privateKey = privateKey,
+                )
             return TlsAcceptorDataBuilder(config)
         }
 
