@@ -1,4 +1,4 @@
-// port-lint: source rama-tls-rustls/src/lib.rs
+// port-lint: source lib.rs
 package io.github.kotlinmania.ramatlsrustls
 
 /**

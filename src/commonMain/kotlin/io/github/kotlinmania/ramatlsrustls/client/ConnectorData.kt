@@ -1,4 +1,4 @@
-// port-lint: source rama-tls-rustls/src/client/connector_data.rs
+// port-lint: source client/connector_data.rs
 package io.github.kotlinmania.ramatlsrustls.client
 
 import io.github.kotlinmania.ramatlsrustls.ApplicationProtocol

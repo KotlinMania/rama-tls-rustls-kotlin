@@ -1,4 +1,4 @@
-// port-lint: tests rama-tls-rustls/src/server/mod.rs
+// port-lint: tests server/mod.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import io.github.kotlinmania.ramatlsrustls.server.DynamicConfigProvider

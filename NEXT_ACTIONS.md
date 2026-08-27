@@ -8,10 +8,10 @@ Based on AST analysis, here are the concrete next steps.
 - **Function parity:** 75/79 matched (target 151) — 94.9%
 - **Class/type parity:** 18/25 matched (target 64) — 72.0%
 - **Combined symbol parity:** 93/104 matched (target 215) — 89.4%
-- **Average inline-code cosine:** 0.50 (function body across 11 matched files)
-- **Average documentation cosine:** 0.45 (doc text across 11 matched files)
-- **Cheat-zeroed Files:** 3
-- **Critical Issues:** 10 files with <0.60 function similarity
+- **Average inline-code cosine:** 0.55 (function body across 12 matched files)
+- **Average documentation cosine:** 0.43 (doc text across 12 matched files)
+- **Cheat-zeroed Files:** 2
+- **Critical Issues:** 9 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -62,7 +62,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/3 matched (target 1)
 - **Missing types:** `Output`, `Error`
 
-### 4. rama-tls-rustls.type_conversion
+### 4. type_conversion
 
 - **Target:** `ramatlsrustls.TypeConversion`
 - **Similarity:** 0.13
@@ -130,7 +130,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 10. rama-tls-rustls.verify
+### 10. verify
 
 - **Target:** `ramatlsrustls.Verify`
 - **Similarity:** 0.74
@@ -141,7 +141,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 10)
 - **Missing types:** _none_
 
-### 11. rama-tls-rustls.key_log
+### 11. key_log
 
 - **Target:** `ramatlsrustls.KeyLog`
 - **Similarity:** 0.59
@@ -152,12 +152,12 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched (target 5)
 - **Missing types:** _none_
 
-### 12. rama-tls-rustls.lib
+### 12. lib
 
-- **Target:** `ramatlsrustls.Lib [STUB]`
-- **Similarity:** 0.00
+- **Target:** `ramatlsrustls.Lib`
+- **Similarity:** 1.00
 - **Dependents:** 0
-- **Priority Score:** 110.0
+- **Priority Score:** 100.0
 - **Functions:** 0/0 matched
 - **Missing functions:** _none_
 - **Types:** 1/1 matched
