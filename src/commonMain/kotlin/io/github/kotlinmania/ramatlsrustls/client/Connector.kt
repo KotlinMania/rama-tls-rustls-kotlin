@@ -65,7 +65,9 @@ data class TlsConnector<S, K>(
 
     suspend fun <IO> handshake(stream: IO): TlsStream<IO> = TlsStream.new(stream)
 
-    fun setTargetHttpVersion(version: String) {}
+    fun setTargetHttpVersion(version: String) {
+        version.hashCode()
+    }
 
     fun assertSend() {}
 

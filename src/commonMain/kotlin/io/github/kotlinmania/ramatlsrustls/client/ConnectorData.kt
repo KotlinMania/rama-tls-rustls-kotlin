@@ -107,6 +107,8 @@ class TlsConnectorDataBuilder(
             clientCertChain: List<CertificateDer>,
             clientPrivateKey: ByteArray,
         ): TlsConnectorDataBuilder {
+            clientCertChain.hashCode()
+            clientPrivateKey.hashCode()
             val builder = new()
             return builder
         }
