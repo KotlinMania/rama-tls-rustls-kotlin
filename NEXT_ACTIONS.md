@@ -8,10 +8,10 @@ Based on AST analysis, here are the concrete next steps.
 - **Function parity:** 76/79 matched (target 156) — 96.2%
 - **Class/type parity:** 18/25 matched (target 64) — 72.0%
 - **Combined symbol parity:** 94/104 matched (target 220) — 90.4%
-- **Average inline-code cosine:** 0.55 (function body across 12 matched files)
-- **Average documentation cosine:** 0.43 (doc text across 12 matched files)
-- **Cheat-zeroed Files:** 2
-- **Critical Issues:** 9 files with <0.60 function similarity
+- **Average inline-code cosine:** 0.52 (function body across 11 matched files)
+- **Average documentation cosine:** 0.45 (doc text across 11 matched files)
+- **Cheat-zeroed Files:** 3
+- **Critical Issues:** 10 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -43,13 +43,12 @@ Every matched file is listed below with function and type symbol parity.
 - **Target:** `client.Connector`
 - **Similarity:** 0.52
 - **Dependents:** 0
-- **Priority Score:** 52004.9
+- **Priority Score:** 52004.8
 - **Functions:** 10/12 matched (target 22)
 - **Missing functions:** `assert_send`, `assert_sync`
 - **Types:** 5/8 matched (target 6)
 - **Missing types:** `Service`, `Output`, `Error`
 - **Tests:** 0/2 matched
-- **Lint issues:** 1
 
 ### 3. server.service
 
@@ -84,7 +83,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/2 matched (target 1)
 - **Missing types:** `Service`
 
-### 6. type_conversion
+### 6. rama-tls-rustls.type_conversion
 
 - **Target:** `ramatlsrustls.TypeConversion`
 - **Similarity:** 0.24
@@ -99,14 +98,13 @@ Every matched file is listed below with function and type symbol parity.
 ### 7. client.connector_data
 
 - **Target:** `client.ConnectorData`
-- **Similarity:** 0.56
+- **Similarity:** 0.57
 - **Dependents:** 0
-- **Priority Score:** 1204.4
+- **Priority Score:** 1204.3
 - **Functions:** 10/10 matched (target 20)
 - **Missing functions:** _none_
 - **Types:** 2/2 matched (target 4)
 - **Missing types:** _none_
-- **Lint issues:** 2
 
 ### 8. client.tls_stream_auto
 
@@ -130,7 +128,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 10. verify
+### 10. rama-tls-rustls.verify
 
 - **Target:** `ramatlsrustls.Verify`
 - **Similarity:** 0.74
@@ -141,7 +139,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 10)
 - **Missing types:** _none_
 
-### 11. key_log
+### 11. rama-tls-rustls.key_log
 
 - **Target:** `ramatlsrustls.KeyLog`
 - **Similarity:** 0.59
@@ -152,12 +150,12 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched (target 5)
 - **Missing types:** _none_
 
-### 12. lib
+### 12. rama-tls-rustls.lib
 
-- **Target:** `ramatlsrustls.Lib`
-- **Similarity:** 1.00
+- **Target:** `ramatlsrustls.Lib [STUB]`
+- **Similarity:** 0.00
 - **Dependents:** 0
-- **Priority Score:** 100.0
+- **Priority Score:** 110.0
 - **Functions:** 0/0 matched
 - **Missing functions:** _none_
 - **Types:** 1/1 matched

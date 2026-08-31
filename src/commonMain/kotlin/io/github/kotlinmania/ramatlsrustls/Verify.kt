@@ -1,4 +1,4 @@
-// port-lint: source verify.rs
+// port-lint: source rama-tls-rustls/src/verify.rs
 package io.github.kotlinmania.ramatlsrustls
 
 /**
