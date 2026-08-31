@@ -44,9 +44,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.52
 - **Dependents:** 0
 - **Priority Score:** 52004.9
-- **Functions:** 10/12 matched (target 17)
+- **Functions:** 10/12 matched (target 22)
 - **Missing functions:** `assert_send`, `assert_sync`
-- **Types:** 5/8 matched (target 5)
+- **Types:** 5/8 matched (target 6)
 - **Missing types:** `Service`, `Output`, `Error`
 - **Tests:** 0/2 matched
 - **Lint issues:** 1
@@ -68,9 +68,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.34
 - **Dependents:** 0
 - **Priority Score:** 11306.6
-- **Functions:** 7/8 matched (target 13)
+- **Functions:** 7/8 matched (target 17)
 - **Missing functions:** `get_config`
-- **Types:** 5/5 matched (target 9)
+- **Types:** 5/5 matched (target 10)
 - **Missing types:** _none_
 
 ### 5. server.layer
@@ -169,9 +169,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 10.0
-- **Functions:** 0/0 matched (target 5)
+- **Functions:** 0/0 matched
 - **Missing functions:** _none_
-- **Types:** 0/0 matched (target 2)
+- **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
 ### 14. server.mod
@@ -180,9 +180,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 10.0
-- **Functions:** 0/0 matched (target 4)
+- **Functions:** 0/0 matched
 - **Missing functions:** _none_
-- **Types:** 0/0 matched (target 2)
+- **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
 ## Success Criteria
