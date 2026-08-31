@@ -1,4 +1,4 @@
-// port-lint: tests key_log.rs
+// port-lint: tests rama-tls-rustls/src/key_log.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import kotlin.test.Test
