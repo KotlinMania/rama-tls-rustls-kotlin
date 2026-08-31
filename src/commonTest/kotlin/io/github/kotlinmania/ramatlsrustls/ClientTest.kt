@@ -1,4 +1,4 @@
-// port-lint: tests client/mod.rs
+// port-lint: tests client/connector.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import io.github.kotlinmania.ramatlsrustls.client.AutoTlsStream

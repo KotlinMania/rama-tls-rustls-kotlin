@@ -1,4 +1,4 @@
-// port-lint: tests server/mod.rs
+// port-lint: tests server/acceptor_data.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import io.github.kotlinmania.ramatlsrustls.server.SelfSignedData
