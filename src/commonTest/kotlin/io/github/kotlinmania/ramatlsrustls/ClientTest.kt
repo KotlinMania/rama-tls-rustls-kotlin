@@ -1,4 +1,4 @@
-// port-lint: tests rama-tls-rustls/src/client/connector.rs
+// port-lint: tests client/connector.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import io.github.kotlinmania.ramatlsrustls.client.AutoTlsStream
