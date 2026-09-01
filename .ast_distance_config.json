@@ -2,7 +2,7 @@
   "type": "port",
   "name": "rama-tls-rustls-kotlin",
   "source": {
-    "path": "tmp",
+    "path": "tmp/rama-tls-rustls/src",
     "lang": "rust"
   },
   "target": {

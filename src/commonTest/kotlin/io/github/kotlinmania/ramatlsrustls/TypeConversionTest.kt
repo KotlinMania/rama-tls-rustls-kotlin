@@ -1,4 +1,4 @@
-// port-lint: tests rama-tls-rustls/src/type_conversion.rs
+// port-lint: tests type_conversion.rs
 package io.github.kotlinmania.ramatlsrustls
 
 import kotlin.test.Test
