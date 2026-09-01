@@ -16,9 +16,24 @@
     "lint": true
   },
   "reexport_modules": [
+    "client",
+    "client.rs",
+    "client/mod",
     "client/mod.rs",
+    "rama-tls-rustls/src/client",
+    "rama-tls-rustls/src/client/mod",
+    "rama-tls-rustls/src/client/mod.rs",
+    "server",
+    "server.rs",
+    "server/mod",
     "server/mod.rs",
-    "lib.rs"
+    "rama-tls-rustls/src/server",
+    "rama-tls-rustls/src/server/mod",
+    "rama-tls-rustls/src/server/mod.rs",
+    "lib",
+    "lib.rs",
+    "rama-tls-rustls/src/lib",
+    "rama-tls-rustls/src/lib.rs"
   ]
 }
 

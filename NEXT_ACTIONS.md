@@ -6,11 +6,11 @@ Based on AST analysis, here are the concrete next steps.
 
 - **Files Present:** 14/14 (100.0%)
 - **Function parity:** 76/79 matched (target 156) — 96.2%
-- **Class/type parity:** 18/25 matched (target 64) — 72.0%
-- **Combined symbol parity:** 94/104 matched (target 220) — 90.4%
+- **Class/type parity:** 17/24 matched (target 61) — 70.8%
+- **Combined symbol parity:** 93/103 matched (target 217) — 90.3%
 - **Average inline-code cosine:** 0.52 (function body across 11 matched files)
 - **Average documentation cosine:** 0.45 (doc text across 11 matched files)
-- **Cheat-zeroed Files:** 3
+- **Cheat-zeroed Files:** 0
 - **Critical Issues:** 10 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
@@ -150,39 +150,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched (target 5)
 - **Missing types:** _none_
 
-### 12. rama-tls-rustls.lib
-
-- **Target:** `ramatlsrustls.Lib [STUB]`
-- **Similarity:** 0.00
-- **Dependents:** 0
-- **Priority Score:** 110.0
-- **Functions:** 0/0 matched
-- **Missing functions:** _none_
-- **Types:** 1/1 matched
-- **Missing types:** _none_
-
-### 13. client.mod
-
-- **Target:** `client.Mod [STUB]`
-- **Similarity:** 0.00
-- **Dependents:** 0
-- **Priority Score:** 10.0
-- **Functions:** 0/0 matched
-- **Missing functions:** _none_
-- **Types:** 0/0 matched (target 1)
-- **Missing types:** _none_
-
-### 14. server.mod
-
-- **Target:** `server.Mod [STUB]`
-- **Similarity:** 0.00
-- **Dependents:** 0
-- **Priority Score:** 10.0
-- **Functions:** 0/0 matched
-- **Missing functions:** _none_
-- **Types:** 0/0 matched (target 1)
-- **Missing types:** _none_
-
 ## Success Criteria
 
 For each file to be considered "complete":
@@ -191,4 +158,19 @@ For each file to be considered "complete":
 - All tests ported
 - Documentation ported
 - port-lint header present
+
+## Reexport / Wiring Modules
+
+These files match `reexport_modules` patterns in `.ast_distance_config.json`. They are filtered out of
+normal priority and missing-file ladders because they are wiring
+modules, not direct logic ports. Consult them for call-site routing;
+do not treat them as the next implementation target by default.
+
+### Matched
+
+| Source | Target | Path |
+|--------|--------|------|
+| `rama-tls-rustls.lib` | `ramatlsrustls.Lib` | `rama-tls-rustls/src/lib` |
+| `client.mod` | `client.Mod` | `rama-tls-rustls/src/client/mod` |
+| `server.mod` | `server.Mod` | `rama-tls-rustls/src/server/mod` |
 
