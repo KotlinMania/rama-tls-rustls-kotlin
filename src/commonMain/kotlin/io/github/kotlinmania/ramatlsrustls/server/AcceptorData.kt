@@ -5,6 +5,8 @@ import io.github.kotlinmania.ramatlsrustls.ApplicationProtocol
 import io.github.kotlinmania.ramatlsrustls.CertificateDer
 import io.github.kotlinmania.ramatlsrustls.ClientHello
 import io.github.kotlinmania.ramatlsrustls.KeyLog
+import io.github.kotlinmania.ramatlsrustls.KeyLogFile
+import io.github.kotlinmania.ramatlsrustls.KeyLogIntent
 
 /**
  * Self-signed TLS certificate generation parameters.
@@ -38,6 +40,16 @@ interface DynDynamicConfigProvider {
 }
 
 /**
+ * Default implementation of [DynDynamicConfigProvider] delegating to [DynamicConfigProvider].
+ */
+class DefaultDynDynamicConfigProvider(
+    private val provider: DynamicConfigProvider,
+) : DynDynamicConfigProvider {
+    override suspend fun getConfig(clientHello: ClientHello): ServerConfigData =
+        provider.getConfig(clientHello)
+}
+
+/**
  * Server configuration: either stored or dynamically provided.
  */
 sealed class ServerConfig {
@@ -48,6 +60,12 @@ sealed class ServerConfig {
     data class Dynamic(
         val provider: DynamicConfigProvider,
     ) : ServerConfig()
+
+    companion object {
+        fun from(config: ServerConfigData): ServerConfig = Stored(config)
+
+        fun from(provider: DynamicConfigProvider): ServerConfig = Dynamic(provider)
+    }
 
     fun fmt(): String =
         when (this) {
@@ -65,11 +83,14 @@ data class TlsAcceptorData(
     val serverConfig: ServerConfig,
 ) {
     companion object {
+        fun from(serverConfig: ServerConfig): TlsAcceptorData =
+            TlsAcceptorData(serverConfig)
+
         fun from(config: ServerConfigData): TlsAcceptorData =
-            TlsAcceptorData(ServerConfig.Stored(config))
+            TlsAcceptorData(ServerConfig.from(config))
 
         fun from(provider: DynamicConfigProvider): TlsAcceptorData =
-            TlsAcceptorData(ServerConfig.Dynamic(provider))
+            TlsAcceptorData(ServerConfig.from(provider))
 
         fun fromConfig(config: ServerConfigData): TlsAcceptorData = from(config)
 
@@ -100,6 +121,13 @@ class TlsAcceptorDataBuilder(
             val (certChain, key) = selfSignedServerAuth(data)
             return new(certChain, key)
         }
+    }
+
+    fun envKeyLogger(): TlsAcceptorDataBuilder {
+        KeyLogIntent.Environment.filePath()?.let { path ->
+            serverConfig.keyLog = KeyLogFile.tryNew(path)
+        }
+        return this
     }
 
     fun withAlpnProtocols(protos: List<ApplicationProtocol>): TlsAcceptorDataBuilder {

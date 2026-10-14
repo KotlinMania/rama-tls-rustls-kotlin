@@ -63,13 +63,15 @@ class ClientTest {
     }
 
     @Test
-    fun testAssertSend() {
+    fun assertSend() {
+        // Rust tests compile-time Send marker trait; Kotlin multiplatform reference types are thread-safe or coroutine-isolated without Send marker.
         val layer = TlsConnectorLayer.auto()
         assertNotNull(layer)
     }
 
     @Test
-    fun testAssertSync() {
+    fun assertSync() {
+        // Rust tests compile-time Sync marker trait; Kotlin multiplatform reference types are thread-safe or coroutine-isolated without Sync marker.
         val layer = TlsConnectorLayer.auto()
         assertNotNull(layer)
     }
