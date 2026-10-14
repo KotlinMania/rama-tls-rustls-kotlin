@@ -5,6 +5,8 @@ import io.github.kotlinmania.ramatlsrustls.ApplicationProtocol
 import io.github.kotlinmania.ramatlsrustls.CertificateDer
 import io.github.kotlinmania.ramatlsrustls.Host
 import io.github.kotlinmania.ramatlsrustls.KeyLog
+import io.github.kotlinmania.ramatlsrustls.KeyLogFile
+import io.github.kotlinmania.ramatlsrustls.KeyLogIntent
 import io.github.kotlinmania.ramatlsrustls.NoServerCertVerifier
 
 /**
@@ -58,6 +60,7 @@ data class TlsConnectorData(
         fun tryNewHttpAuto(): TlsConnectorData =
             TlsConnectorDataBuilder
                 .new()
+                .tryWithEnvKeyLogger()
                 .withAlpnProtocolsHttpAuto()
                 .build()
 
@@ -67,6 +70,7 @@ data class TlsConnectorData(
         fun tryNewHttp1(): TlsConnectorData =
             TlsConnectorDataBuilder
                 .new()
+                .tryWithEnvKeyLogger()
                 .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_11))
                 .build()
 
@@ -76,6 +80,7 @@ data class TlsConnectorData(
         fun tryNewHttp2(): TlsConnectorData =
             TlsConnectorDataBuilder
                 .new()
+                .tryWithEnvKeyLogger()
                 .withAlpnProtocols(listOf(ApplicationProtocol.HTTP_2))
                 .build()
     }
@@ -113,6 +118,15 @@ class TlsConnectorDataBuilder(
             return builder
         }
     }
+
+    fun envKeyLogger(): TlsConnectorDataBuilder {
+        KeyLogIntent.Environment.filePath()?.let { path ->
+            clientConfig.keyLog = KeyLogFile.tryNew(path)
+        }
+        return this
+    }
+
+    fun tryWithEnvKeyLogger(): TlsConnectorDataBuilder = envKeyLogger()
 
     fun withAlpnProtocols(protos: List<ApplicationProtocol>): TlsConnectorDataBuilder {
         clientConfig.alpnProtocols = protos.map { it.bytes }
