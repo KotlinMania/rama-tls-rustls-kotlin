@@ -25,16 +25,6 @@ interface KeyLog {
 }
 
 /**
- * KeyLogIntent specifies the target or source of key logging configuration.
- */
-enum class KeyLogIntent {
-    Environment,
-    ;
-
-    fun filePath(): String? = null
-}
-
-/**
  * Handle to an underlying keylog file sink.
  */
 class KeyLogFileHandle(

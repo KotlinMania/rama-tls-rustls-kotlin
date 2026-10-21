@@ -1,12 +1,12 @@
 // port-lint: source client/connector_data.rs
 package io.github.kotlinmania.ramatlsrustls.client
 
+import io.github.kotlinmania.ramanet.address.Host
+import io.github.kotlinmania.ramanet.tls.KeyLogIntent
 import io.github.kotlinmania.ramatlsrustls.ApplicationProtocol
 import io.github.kotlinmania.ramatlsrustls.CertificateDer
-import io.github.kotlinmania.ramatlsrustls.Host
 import io.github.kotlinmania.ramatlsrustls.KeyLog
 import io.github.kotlinmania.ramatlsrustls.KeyLogFile
-import io.github.kotlinmania.ramatlsrustls.KeyLogIntent
 import io.github.kotlinmania.ramatlsrustls.NoServerCertVerifier
 
 /**

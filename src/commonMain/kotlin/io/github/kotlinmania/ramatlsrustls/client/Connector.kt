@@ -1,7 +1,10 @@
 // port-lint: source client/connector.rs
 package io.github.kotlinmania.ramatlsrustls.client
 
-import io.github.kotlinmania.ramatlsrustls.Host
+import io.github.kotlinmania.ramacore.RamaResult
+import io.github.kotlinmania.ramacore.layer.Layer
+import io.github.kotlinmania.ramacore.service.Service
+import io.github.kotlinmania.ramanet.address.Host
 
 /**
  * Marker kind for auto-negotiating TLS connectors.
@@ -26,15 +29,21 @@ data class ConnectorKindTunnel(
 data class TlsConnectorLayer<K>(
     val connectorData: TlsConnectorData? = null,
     val kind: K,
-) {
+) : Layer<Any?, TlsConnector<Any?, K>> {
     fun withConnectorData(connectorData: TlsConnectorData?): TlsConnectorLayer<K> =
         copy(connectorData = connectorData)
 
-    fun <S> layer(inner: S): TlsConnector<S, K> =
+    override fun layer(inner: Any?): TlsConnector<Any?, K> =
         TlsConnector(inner = inner, connectorData = connectorData, kind = kind)
 
-    fun <S> intoLayer(inner: S): TlsConnector<S, K> =
+    override fun intoLayer(inner: Any?): TlsConnector<Any?, K> =
         layer(inner)
+
+    fun <S> layerTyped(inner: S): TlsConnector<S, K> =
+        TlsConnector(inner = inner, connectorData = connectorData, kind = kind)
+
+    fun <S> intoLayerTyped(inner: S): TlsConnector<S, K> =
+        layerTyped(inner)
 
     companion object {
         fun default(): TlsConnectorLayer<ConnectorKindAuto> = auto()
@@ -57,11 +66,14 @@ data class TlsConnector<S, K>(
     val inner: S,
     val connectorData: TlsConnectorData? = null,
     val kind: K,
-) {
+) : Service<Any, Any, Any> {
     fun withConnectorData(connectorData: TlsConnectorData?): TlsConnector<S, K> =
         copy(connectorData = connectorData)
 
-    suspend fun <Input> serve(input: Input): Input = input
+    override suspend fun serve(input: Any): RamaResult<Any, Any> =
+        RamaResult.ok(input)
+
+    suspend fun <Input> serveInput(input: Input): Input = input
 
     suspend fun <IO> handshake(stream: IO): TlsStream<IO> = TlsStream.new(stream)
 

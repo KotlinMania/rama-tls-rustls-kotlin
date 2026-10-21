@@ -1,6 +1,9 @@
 // port-lint: source type_conversion.rs
 package io.github.kotlinmania.ramatlsrustls
 
+import io.github.kotlinmania.ramanet.address.Host
+import io.github.kotlinmania.ramanet.tls.DataEncoding
+
 /**
  * Protocol version for TLS connections.
  */
@@ -98,53 +101,6 @@ data class ApplicationProtocol(
 }
 
 /**
- * Host name or IP address.
- */
-sealed class Host {
-    data class Name(
-        val domain: String,
-    ) : Host()
-
-    data class Address(
-        val ip: String,
-    ) : Host()
-
-    companion object {
-        fun fromDomain(domain: String): Host = Name(domain)
-
-        fun fromIp(ip: String): Host = Address(ip)
-    }
-}
-
-/**
- * Data encoding for certificates and DER payloads.
- */
-sealed class DataEncoding {
-    data class Der(
-        val bytes: ByteArray,
-    ) : DataEncoding() {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (other !is Der) return false
-            return bytes.contentEquals(other.bytes)
-        }
-
-        override fun hashCode(): Int = bytes.contentHashCode()
-    }
-
-    data class DerStack(
-        val items: List<ByteArray>,
-    ) : DataEncoding()
-
-    companion object {
-        fun fromCertificate(cert: CertificateDer): DataEncoding = Der(cert.bytes)
-
-        fun fromCertificates(certs: List<CertificateDer>): DataEncoding =
-            DerStack(certs.map { it.bytes })
-    }
-}
-
-/**
  * TLS Client Hello extensions.
  */
 sealed class ClientHelloExtension {
@@ -191,16 +147,12 @@ data class ClientHello(
 /**
  * Converts a [ServerName] into a [Host].
  */
-fun ServerName.toHost(): Host = Host.Name(value)
+fun ServerName.toHost(): Host = Host.parse(value)
 
 /**
  * Converts a [Host] into a [ServerName].
  */
-fun Host.toServerName(): ServerName =
-    when (this) {
-        is Host.Name -> ServerName(domain)
-        is Host.Address -> ServerName(ip)
-    }
+fun Host.toServerName(): ServerName = ServerName(toString())
 
 /**
  * Converts a [CertificateDer] to [DataEncoding].
