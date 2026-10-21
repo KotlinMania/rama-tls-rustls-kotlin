@@ -1,6 +1,8 @@
 // port-lint: tests type_conversion.rs
 package io.github.kotlinmania.ramatlsrustls
 
+import io.github.kotlinmania.ramanet.address.Host
+import io.github.kotlinmania.ramanet.tls.DataEncoding
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -27,12 +29,12 @@ class TypeConversionTest {
 
     @Test
     fun testHostAndServerNameConversion() {
-        val domainHost = Host.fromDomain("example.com")
+        val domainHost = Host.parse("example.com")
         val serverName = domainHost.toServerName()
         assertEquals("example.com", serverName.value)
-        assertEquals(Host.Name("example.com"), serverName.toHost())
+        assertEquals(Host.parse("example.com"), serverName.toHost())
 
-        val ipHost = Host.fromIp("127.0.0.1")
+        val ipHost = Host.parse("127.0.0.1")
         val ipServerName = ipHost.toServerName()
         assertEquals("127.0.0.1", ipServerName.value)
     }
@@ -47,7 +49,7 @@ class TypeConversionTest {
         val certList = listOf(cert, CertificateDer(byteArrayOf(5, 6)))
         val stackEncoding = certList.toDataEncoding()
         assertTrue(stackEncoding is DataEncoding.DerStack)
-        assertEquals(2, stackEncoding.items.size)
+        assertEquals(2, stackEncoding.stack.size)
     }
 
     @Test

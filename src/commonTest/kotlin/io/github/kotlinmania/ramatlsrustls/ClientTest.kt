@@ -1,6 +1,7 @@
 // port-lint: tests client/connector.rs
 package io.github.kotlinmania.ramatlsrustls
 
+import io.github.kotlinmania.ramanet.address.Host
 import io.github.kotlinmania.ramatlsrustls.client.AutoTlsStream
 import io.github.kotlinmania.ramatlsrustls.client.TlsConnectorData
 import io.github.kotlinmania.ramatlsrustls.client.TlsConnectorDataBuilder
@@ -28,12 +29,12 @@ class ClientTest {
         val custom =
             TlsConnectorDataBuilder
                 .new()
-                .withServerName(Host.fromDomain("example.org"))
+                .withServerName(Host.parse("example.org"))
                 .withStoreServerCertificateChain(true)
                 .withNoCertVerifier()
                 .build()
 
-        assertEquals(Host.Name("example.org"), custom.serverName)
+        assertEquals(Host.parse("example.org"), custom.serverName)
         assertTrue(custom.storeServerCertificateChain)
         assertNotNull(custom.clientConfig.serverCertVerifier)
     }
@@ -55,8 +56,8 @@ class ClientTest {
         val secureLayer = TlsConnectorLayer.secure()
         assertNotNull(secureLayer.kind)
 
-        val tunnelLayer = TlsConnectorLayer.tunnel(Host.fromDomain("proxy.net"))
-        assertEquals(Host.Name("proxy.net"), tunnelLayer.kind.host)
+        val tunnelLayer = TlsConnectorLayer.tunnel(Host.parse("proxy.net"))
+        assertEquals(Host.parse("proxy.net"), tunnelLayer.kind.host)
 
         val connector = autoLayer.layer("inner-service")
         assertEquals("inner-service", connector.inner)

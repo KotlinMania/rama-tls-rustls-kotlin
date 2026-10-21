@@ -1,12 +1,12 @@
 // port-lint: source server/acceptor_data.rs
 package io.github.kotlinmania.ramatlsrustls.server
 
+import io.github.kotlinmania.ramanet.tls.KeyLogIntent
 import io.github.kotlinmania.ramatlsrustls.ApplicationProtocol
 import io.github.kotlinmania.ramatlsrustls.CertificateDer
 import io.github.kotlinmania.ramatlsrustls.ClientHello
 import io.github.kotlinmania.ramatlsrustls.KeyLog
 import io.github.kotlinmania.ramatlsrustls.KeyLogFile
-import io.github.kotlinmania.ramatlsrustls.KeyLogIntent
 
 /**
  * Self-signed TLS certificate generation parameters.
